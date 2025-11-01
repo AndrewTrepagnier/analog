@@ -34,52 +34,75 @@ fn matmul(a: &Vec<Vec<i32>>, b: &Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
 
 
-
 fn exchange_matrix(mat: &Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     matmul(mat, mat)
 }
 
 
 
-fn concat_2x2_grid(
-    q1: &Vec<Vec<i32>>,
-    q2: &Vec<Vec<i32>>,
-    q3: &Vec<Vec<i32>>,
-    q4: &Vec<Vec<i32>>,
-) -> Vec<Vec<i32>> {
-    let rows = q1.len();
-    let cols = q1[0].len();
-    let mut result = Vec::with_capacity(rows * 2);
+fn 9_12(len: usize, one_var: i32, row1_val: i32, row16_val: i32) -> &Vec<Vec<i32>>{
 
-    // Top half
-    for i in 0..rows {
-        let mut row = Vec::with_capacity(cols * 2);
-        row.extend(&q1[i]);
-        row.extend(&q2[i]);
-        result.push(row);
-    }
-    // Bottom half
-    for i in 0..rows {
-        let mut row = Vec::with_capacity(cols * 2);
-        row.extend(&q3[i]);
-        row.extend(&q4[i]);
-        result.push(row);
-    }
+    let mut 9_12_matrix : &Vec<Vec<i32>> = identity_matrix(len, one_var);
 
-    result
+    9_12_matrix[1][16] = row1_val;
+    9_12_matrix[16][1] = row16_val;
+
+    // Future work, if Minutes and Hours have a landing zone here, place them now. 
+
 }
+
+
+fn 12_3(len: usize, one_var: i32, row1_val: i32, row16_val: i32) -> &Vec<Vec<i32>>{
+
+    let mut 12_3_matrix : &Vec<Vec<i32>> = exchange_matrix(len, one_var);
+
+    9_12_matrix[1][16] = row1_val;
+    9_12_matrix[16][1] = row16_val;
+
+    // Future work, if Minutes and Hours have a landing zone here, place them now. 
+
+}
+
+
+
+fn 3_6(len: usize, one_var: i32, row1_val: i32, row16_val: i32) -> &Vec<Vec<i32>>{
+
+    let mut 3_6_matrix : &Vec<Vec<i32>> = identity_matrix(len, one_var);
+
+    9_12_matrix[1][16] = row1_val;
+    9_12_matrix[16][1] = row16_val;
+
+    // Future work, if Minutes and Hours have a landing zone here, place them now. 
+
+}
+
+
+fn 6_9(len: usize, one_var: i32, row1_val: i32, row16_val: i32) -> &Vec<Vec<i32>>{
+
+    let mut 6_9_matrix : &Vec<Vec<i32>> = exchange_matrix(len, one_var);
+
+    9_12_matrix[1][16] = row1_val;
+    9_12_matrix[16][1] = row16_val;
+
+    // Future work, if Minutes and Hours have a landing zone here, place them now. 
+
+}
+
+
+
+
 
 
 fn main() {
     const QUAD_SIZE: usize = 16;
     const ONE_VAR: i32 = 1; 
 
-    let quadrant_1 = identity_matrix(QUAD_SIZE, ONE_VAR);
-    let quadrant_2 = exchange_matrix(&quadrant_1);
-    let quadrant_4 = identity_matrix(QUAD_SIZE, ONE_VAR);
-    let quadrant_3 = exchange_matrix(&quadrant_1);
+    // let quadrant_1 = identity_matrix(QUAD_SIZE, ONE_VAR);
+    // let quadrant_2 = exchange_matrix(&quadrant_1);
+    // let quadrant_4 = identity_matrix(QUAD_SIZE, ONE_VAR);
+    // let quadrant_3 = exchange_matrix(&quadrant_1);
 
-    let full_clock = concat_2x2_grid(&quadrant_1, &quadrant_2, &quadrant_3, &quadrant_4);
+    // let full_clock = concat_2x2_grid(&quadrant_1, &quadrant_2, &quadrant_3, &quadrant_4);
 
     println!("Full Clock Face ({}x{}):", full_clock.len(), full_clock[0].len());
     println!("[Q1 | Q2]");
