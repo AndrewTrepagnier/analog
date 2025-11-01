@@ -1,4 +1,3 @@
-
 fn identity_matrix(len: usize, one_var: i32) -> Vec<Vec<i32>> {
     let mut generated_matrix: Vec<Vec<i32>> = vec![vec![0; len]; len];
 
@@ -120,6 +119,29 @@ fn concat_2x2_grid(q1: &Vec<Vec<i32>>, q2: &Vec<Vec<i32>>,
 }
 
 
+fn strip_zeros(len: usize, grid: &Vec<Vec<i32>>) {
+    let dot = "*"; 
+
+    for i in 0..(2 * len) {
+        for j in 0..(2 * len) {
+            let entry = grid[i][j];
+
+            if entry != 0 && entry != 12 && entry != 3 && entry != 6 && entry != 9 {
+                print!("{} ", dot);
+            } else if entry == 3 || entry == 6 || entry == 9 || entry == 12 {
+                print!("{:2} ", entry); // Keep these visible as numbers
+            } else {
+                print!("  "); // Print space for zeros
+            }
+        }
+        println!();
+    }
+}
+
+
+
+
+
 fn main() {
     const QUAD_SIZE: usize = 16;
     const ONE_VAR: i32 = 1; 
@@ -135,12 +157,9 @@ fn main() {
     let quadrant_3 = quad_6_to_9(QUAD_SIZE, ONE_VAR, MARKER_9, MARKER_6);
 
     let full_clock = concat_2x2_grid(&quadrant_1, &quadrant_2, &quadrant_3, &quadrant_4);
-
-    for row in full_clock.iter() {
-        for &num in row.iter() {
-            print!("{:2} ", num);
-        }
-        println!();
-    }
+    
+    println!("Analog Clock Face:");
+    println!();
+    strip_zeros(QUAD_SIZE, &full_clock);
 }
 
