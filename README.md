@@ -1,4 +1,4 @@
-# Linear Algebra Anaolog Clock
+# Linear Algebra Analog Clock
 
 
 The goal of this project is to use linear algebra techniques in a creative way to manipulate the operating system’s (macOS) current time into an analog-style ASCII representation, using as few crates as possible.
