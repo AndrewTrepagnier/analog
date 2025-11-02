@@ -1,6 +1,6 @@
 // Import the clock math module
-mod clock_math;
-use clock_math::{what_time, place_hand};
+mod hand_placement;
+use hand_placement::{what_time, place_hand};
 
 fn identity_matrix(len: usize, one_var: i32) -> Vec<Vec<i32>> {
     let mut generated_matrix: Vec<Vec<i32>> = vec![vec![0; len]; len];
