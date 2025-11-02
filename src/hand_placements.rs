@@ -41,7 +41,22 @@ fn which_quadrant() -> i32{
 }
 
 
-fn reference_vec_12(which_quadrant : i32) {
+fn reference_vec_12(which_quadrant : i32, _origin_ : vec!<vec<i32>>) {
+
+	let origin : vec!<vec<i32>> = _origin_;
+	let ref_vec : vec!<vec<i32>> = vec!((idk, 1), idk); //need to find true matrix position of the 12
+
+	//180 total minutes in each quadrant. So for quadrant 2, your hour is either 12, 1, or 2. 
+
+	if Time::hour == 12 {
+		let which_quadrant : i32 = 0; //special case to rewrite the 12 to 0, this is only needed in this quadrant since the successor of the 12 position needs to be 1 (not 13)
+	}
+
+	let minutes_from_ref : i32 = ( which_quadrant - 0) * 60 + Time::minute // minutes within quadrant, for example: 1:24 is 60+24 = 84 minutes
+
+	let ratio : f64 = minutes_from_ref/60;
+
+	angle_from_ref : f64 = ratio*90;
 
 
 }
