@@ -3,9 +3,11 @@
 
 The goal of this project is to use linear algebra techniques in a creative way to manipulate the operating system’s (macOS) current time into an analog-style ASCII representation, using as few crates as possible.
 
-No large language models, no lookup tables, no borrowing from other ASCII clock designs on GitHub — the idea was to build this in a pen-and-paper style, with particular emphasis on matrix operations and geometric transformations.
+No large language models, no lookup tables, no borrowing from other ASCII clock designs on GitHub — the idea was to build this in a pen-and-paper style, with particular emphasis on matrix/vector transformations using dot product tricks.
 
-Time has always been an interesting concept to me, but the real motivation behind this project goes beyond visualizing it. I wanted to explore how linear algebra can drive creative software behavior, while also deepening my understanding of Rust’s crate architecture and standard library. For Python, that exploration happens through the Python Package Index. For Rust, it’s through Cargo crates — and understanding their structure gives a far more visceral understanding of how the language itself is designed.
+Time has always been an interesting concept to me, but the real motivation behind this project goes beyond visualizing it. I wanted to explore how linear algebra can drive a program's functionality, while also deepening my understanding of Rust’s crate architecture and standard library. For Python, that exploration happens through the Python Package Index. For Rust, it’s through Cargo crates — and understanding their structure gives a far more visceral understanding of how the language itself is designed.
+
+Because these are my focus areas, the clock itself is not very asthetically pleasing (as you can see below); however, the logic should be technically sound.
 
 Analog Clock Face:
 ```
