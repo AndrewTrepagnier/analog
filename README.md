@@ -46,3 +46,44 @@ Analog Clock Face:
 [ Q0 | Q1 ]
 
 [ Q2 | Q3 ]
+
+
+
+
+
+
+```
+                              12 12                               
+                            +     +                             
+                          +         +                           
+                        +             +                         
+                      +                 +                       
+                    +                     +                     
+                  +                         +                   
+                +                             +                 
+              +                                 +               
+            +                                     +             
+          +                                         +           
+        +                                             +         
+      +                                                 +       
+    +                                                     +     
+  +                           Origin (X,Y)                   +   
+ 9                                                              3 
+ 9                              +  >  >  >    >  >   >   >   >  3 
+  +                                                         +      (3 o'clock coordinate (w1, w2)
+    +                                                     +     
+      +                                                 +       
+        +                                             +         
+          +                                         +          Reference vector becomes origin-3'oclock vector when it sees the time is between 3-6. 
+            +                                     +            From there, what is the ratio of minutes to 60? for example, 34 minutes / 60 minutes = 56% completed with that hour  
+              +                                 +              between 3 and 4. Find the overall angle between reference vector and 4 position, then 56% of that is the angle that 
+                +                             +                our hour hand landing point will have between that and the reference line. This can be done with a dot product, since 
+                  +                         +                  we our origin coordinate, we know 3's coordinate, we know 4's coordinate (will be 5 dots diagonal from 3) and we can  
+                    +                     +                    calculate the angle it should have from reference vector. This should be a function that takes time parameters, seconds 
+                      +                 +                      and minutes as arguments. 
+                        +             +                         
+                          +         +                           
+                            +     +                             
+                               6  6 
+
+```
