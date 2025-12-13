@@ -14,7 +14,7 @@ The linear algebra clock is a (not so aesthetically pleasing) clock face that ta
 
 It does not use any index mapping or look-up tables to assign the time to the analog clock face. The analog face, itself, is generated using identity matrices and exchange matrices. From there, rotational transformations, determinants, and eigenstructure calculations are applied to place the "M" and "H" denoting the hand placements. 
 
-**Because the mathematics underpinning this project is the focus, I am okay with the clock face itself is not very asthetically pleasing**
+**Because the mathematics underpinning this project is the focus, I am okay with the clock face itself not being very asthetically pleasing**
 
 Analog Clock Face:
 ```
