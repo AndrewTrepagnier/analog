@@ -141,21 +141,26 @@ It is sometimes easier to see with an example:
 
 Example time = 10:43
 
+$$
+\theta_H = \left(10 + \frac{43}{60}\right)\cdot\frac{\pi}{6}
+= 10.717\cdot\frac{\pi}{6}
+\approx 5.612\ \text{rad}
+\approx 321.5^\circ
+$$
 
-\begin{align*}
-\theta_H &= \left(10 + \frac{43}{60}\right) \cdot \frac{\pi}{6} = 10.717 \cdot \frac{\pi}{6} \approx 5.612 \text{ rad} \approx 321.5^{\circ}
-\end{align*}
-
-\begin{align*}
-R(\theta_H) &= \begin{pmatrix}
+$$
+R(\theta_H) =
+\begin{matrix}
 \cos(5.612) & \sin(5.612) \\
 -\sin(5.612) & \cos(5.612)
-\end{pmatrix}
-\approx \begin{pmatrix}
+\end{matrix}
+\approx
+\begin{matrix}
 0.782 & -0.623 \\
 0.623 & 0.782
-\end{pmatrix}
-\end{align*}
+\end{matrix}
+$$
+
 
 Now we just apply the rotation to a reference vector pointing at 12 o'clock:
 ```
