@@ -6,6 +6,8 @@ The precision and design of high quality mechanically-driven clocks was always a
 
 I find there is no better convincing way of illustrating how awesome mechanical time keeping is than to just explain what cruelty it is exposed to everyday. For starters: There are over 31.5 million seconds in a year, and certain craft wrist watches are hitting sub 8 second / year tolerances driven purely by tiny springs and gears and powered by your wrist motion. This is truly unbelievable when you think about the temperature fluctuations affect thermal expansions within the springs and pins, not to mention the whiplash forces it will feel throughout its life - this is a marvel of engineering. 
 
+While this project doesn't deal with mechanical clock design like I would like, it does let me combine my interest for mathematics and clock geometry in a creative way.
+
 ### So what's a linear algebra clock?
 
 The linear algebra clock is a (not so aesthetically pleasing) clock face that takes the digital time of the operating system (i.e. 4:17 , or 10:43) and applies mathematical linear algebra-based transformations to convert the digital time to an analog clock face in the terminal. 
