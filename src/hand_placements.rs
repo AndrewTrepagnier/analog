@@ -1,4 +1,5 @@
-use Chrono::{Local, TimeLike};
+use chrono::{Local, Timelike};
+use std::f64::consts::PI;
 
 pub struct Time {
     pub hour: u32,
@@ -9,73 +10,151 @@ pub struct Time {
 pub fn what_time() -> Time {
     let now = Local::now();
     Time {
-        hour: now.hour() % 12,  // Convert 24-hour to 12-hour
+        hour: now.hour() % 12,
         minute: now.minute(),
         second: now.second(),
     }
 }
 
 
-fn which_quadrant() -> i32{
+/// 2x2 Matrix type for our rotation operations
+type Mat2 = [[f64; 2]; 2];
+type Vec2 = [f64; 2];
 
-	if (Time::hour == 12 || Time::hour == 1 || Time::hour == 2) {
-		// Quadrant = 2
-		let hour_quadrant : i32 = 2;
-	}
 
-	else if (Time::hour == 3 || Time::hour == 4 || Time::hour == 5) {
-		 // Quadrant = 4
-		 let hour_quadrant : i32 = 4;
-	}
+///     R_cw(θ) = | cos(θ)   sin(θ) |
+///               | -sin(θ)  cos(θ) |
 
-	else if (Time::hour == 6 || Time::hour == 7 || Time::hour == 8) {
-		// Quadrant = 3
-		let hour_quadrant : i32 = 3;
-	}
+pub fn time_to_rotation_matrix(time: &Time, hand: char) -> Mat2 {
+    let theta = match hand {
+        'H' => {
+            // Hour hand: 30 deg per hour + 0.5 deg per minute
+            // θ = (hour + minute/60) × (2pi/12)
+            (time.hour as f64 + time.minute as f64 / 60.0) * PI / 6.0
+        }
+        'M' => {
+            // Minute hand: 6deg per minute
+            // θ = minute × (2pi/60)
+            time.minute as f64 * PI / 30.0
+        }
+        _ => 0.0,
+    };
 
-	else if (Time::hour == 9 || Time::hour == 10 || Time::hour == 11) {
-		// Quadrant = 1
-		let hour_quadrant : i32 = 1;
-	}
+ 
+    [
+        [theta.cos(), theta.sin()],
+        [-theta.sin(), theta.cos()],
+    ]
+}
 
+/// Matrix-Vec multiplication
+
+fn mat_vec_mul(mat: &Mat2, vec: &Vec2) -> Vec2 {
+    [
+        mat[0][0] * vec[0] + mat[0][1] * vec[1],
+        mat[1][0] * vec[0] + mat[1][1] * vec[1],
+    ]
 }
 
 
-fn reference_vec_12(which_quadrant : i32, _origin_ : vec!<vec<i32>>) {
-
-	let origin : vec!<vec<i32>> = _origin_;
-	let ref_vec : vec!<vec<i32>> = vec!((idk, 1), idk); //need to find true matrix position of the 12
-
-	//180 total minutes in each quadrant. So for quadrant 2, your hour is either 12, 1, or 2. 
-
-	if Time::hour == 12 {
-		let which_quadrant : i32 = 0; //special case to rewrite the 12 to 0, this is only needed in this quadrant since the successor of the 12 position needs to be 1 (not 13)
-	}
-
-	let minutes_from_ref : i32 = ( which_quadrant - 0) * 60 + Time::minute // minutes within quadrant, for example: 1:24 is 60+24 = 84 minutes
-
-	let ratio : f64 = minutes_from_ref/60;
-
-	angle_from_ref : f64 = ratio*90;
-
-
-}
-
-fn reference_vec_12(which_quadrant : i32) {
-
-	
-}
-
-fn reference_vec_12(which_quadrant : i32) {
-
-	
-}
-
-fn reference_vec_12(which_quadrant : i32) {
-
-	
+/// This serves as a mathematical sanity check.
+fn determinant(mat: &Mat2) -> f64 {
+    mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
 }
 
 
+pub fn compute_hand_position(time: &Time, hand: char, grid_size: usize) -> (usize, usize) {
+    let center = (grid_size / 2) as f64;
+    
+    
+    let length = match hand {
+        'H' => center * 0.55,  // Hour hand: 55% of radius
+        'M' => center * 0.85,  // Minute hand: 85% of radius
+        _ => center * 0.5,
+    };
+
+    // Reference vector: points to 12 o'clock
+    // [0, 1]
+    let reference: Vec2 = [0.0, 1.0];
+
+    
+    let rotation = time_to_rotation_matrix(time, hand);
+
+    
+    let det = determinant(&rotation);
+    debug_assert!((det - 1.0).abs() < 1e-10, "Invalid rotation matrix: det = {}", det);
+
+    
+    let direction = mat_vec_mul(&rotation, &reference);
+
+    // Scale by hand length 
+    let scaled = [direction[0] * length, direction[1] * length];
+
+    // Transform from Cartesian to grid coordinates:
+    let row = center - scaled[1];  // Flip y-axis
+    let col = center + scaled[0];
+
+    // Clamp to valid grid indices
+    let row = row.round().clamp(0.0, (grid_size - 1) as f64) as usize;
+    let col = col.round().clamp(0.0, (grid_size - 1) as f64) as usize;
+
+    (row, col)
+}
+
+/// Places a hand marker on the clock grid 
+pub fn place_hand(grid: &mut Vec<Vec<i32>>, time: &Time, hand: char) {
+    let grid_size = grid.len();
+    let (row, col) = compute_hand_position(time, hand, grid_size);
+    
+    let marker = hand as i32;  // 'H' = 72, 'M' = 77
+    grid[row][col] = marker;
+}
 
 
+
+
+
+
+
+
+
+// #[allow(dead_code)]
+// fn angle_from_trace(mat: &Mat2) -> f64 {
+//     let trace = mat[0][0] + mat[1][1];
+//     (trace / 2.0).acos()
+// }
+
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+
+//     #[test]
+//     fn test_rotation_determinant_is_one() {
+//         let time = Time { hour: 10, minute: 43, second: 0 };
+//         let r_hour = time_to_rotation_matrix(&time, 'H');
+//         let r_min = time_to_rotation_matrix(&time, 'M');
+        
+//         assert!((determinant(&r_hour) - 1.0).abs() < 1e-10);
+//         assert!((determinant(&r_min) - 1.0).abs() < 1e-10);
+//     }
+
+//     #[test]
+//     fn test_12_oclock_points_up() {
+//         let time = Time { hour: 0, minute: 0, second: 0 };
+//         let (row, col) = compute_hand_position(&time, 'H', 32);
+        
+//         // At 12:00, hand should point to top center
+//         assert!(row < 16, "Hour hand at 12:00 should be in top half");
+//         assert!((col as i32 - 16).abs() <= 1, "Hour hand at 12:00 should be centered");
+//     }
+
+//     #[test]
+//     fn test_3_oclock_points_right() {
+//         let time = Time { hour: 3, minute: 0, second: 0 };
+//         let (row, col) = compute_hand_position(&time, 'H', 32);
+        
+//         // At 3:00, hand should point to right center
+//         assert!((row as i32 - 16).abs() <= 1, "Hour hand at 3:00 should be vertically centered");
+//         assert!(col > 16, "Hour hand at 3:00 should be in right half");
+//     }
+// }

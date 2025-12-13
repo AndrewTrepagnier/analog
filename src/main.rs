@@ -1,6 +1,6 @@
 // Import the clock math module
-mod hand_placement;
-use hand_placement::{what_time, place_hand};
+mod hand_placements;
+use hand_placements::{what_time, place_hand};
 
 fn identity_matrix(len: usize, one_var: i32) -> Vec<Vec<i32>> {
     let mut generated_matrix: Vec<Vec<i32>> = vec![vec![0; len]; len];
@@ -157,10 +157,11 @@ fn main() {
              current_time.second);
     
     
-    let quadrant_1 = quad_9_to_12(QUAD_SIZE, ONE_VAR, MARKER_12, MARKER_9);
-    let quadrant_2 = quad_12_to_3(QUAD_SIZE, ONE_VAR, MARKER_12, MARKER_3);
-    let quadrant_4 = quad_3_to_6(QUAD_SIZE, ONE_VAR, MARKER_3, MARKER_6);
-    let quadrant_3 = quad_6_to_9(QUAD_SIZE, ONE_VAR, MARKER_9, MARKER_6);
+    // Each marker only in ONE quadrant to avoid duplicates at edges
+    let quadrant_1 = quad_9_to_12(QUAD_SIZE, ONE_VAR, MARKER_12, MARKER_9);  // Has 12 and 9
+    let quadrant_2 = quad_12_to_3(QUAD_SIZE, ONE_VAR, 0, MARKER_3);          // Has 3 only
+    let quadrant_4 = quad_3_to_6(QUAD_SIZE, ONE_VAR, 0, MARKER_6);           // Has 6 only
+    let quadrant_3 = quad_6_to_9(QUAD_SIZE, ONE_VAR, 0, 0);                  // Empty (9 and 6 are in Q1 and Q4)
     let mut full_clock = concat_2x2_grid(&quadrant_1, &quadrant_2, &quadrant_3, &quadrant_4);
     
     
