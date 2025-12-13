@@ -2,7 +2,7 @@
 
 ### Motivation
 
-The precision and mechanical design of high quality mechanically-driven clocks was always a super fascinating concept to me growing up. I grew to appreciate this more and more throughout my engineering education. 
+The precision and design of high quality mechanically-driven clocks was always a super fascinating concept to me growing up. I grew to appreciate this more and more throughout my engineering education. 
 
 I find there is no better convincing way of illustrating how awesome mechanical time keeping is than to just explain what cruelty it is exposed to everyday. For starters: There are over 31.5 million seconds in a year, and certain craft wrist watches are hitting sub 8 second / year tolerances driven purely by tiny springs and gears and powered by your wrist motion. This is truly unbelievable when you think about the temperature fluctuations affect thermal expansions within the springs and pins, not to mention the whiplash forces it will feel throughout its life - this is a marvel of engineering. 
 
