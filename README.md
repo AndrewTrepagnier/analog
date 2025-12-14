@@ -141,7 +141,9 @@ R(θ) = | cos(θ)   sin(θ)  |
 It is sometimes easier to see with an example:
 
 
-Example time = 10:43
+```
+θ_hour = (10 + 43/60) × π/6 ≈ 5.612 rad ≈ 321.5°
+
 
 **θₕ calculation**
 
@@ -159,14 +161,32 @@ R(θₕ) =
 
 
 Now we just apply the rotation to a reference vector pointing at 12 o'clock:
+
+R(θ) = | 0.782  -0.623 |
+       | 0.623   0.782 |
+```
+
+Now we apply the rotation to a reference vector pointing at 12 o'clock:
+
 ```
 direction = R(θ) × [0, 1]ᵀ = [sin(θ), cos(θ)]ᵀ
 ```
 
-The final position is a **linear combination** of basis vectors with coefficients derived purely from the rotation matrix.
+### The Linear Combination
+
+The final hand position is a linear combination of the standard basis vectors:
+
+```
+position = sin(θ) · ê₁ + cos(θ) · ê₂
+```
+
+The coefficients `sin(θ)` and `cos(θ)` come directly from the rotation matrix operating on our reference vector. This is a weighted sum of the basis vectors where the weights are derived purely from the time through matrix multiplication.
+
+### Bonus: Elegant Properties of the Rotation Matrix
 
 ### Brief side note
-While not essential to the clock's operation, the rotation matrix has some elegant properties worth noting. The matrix is orthogonal (R × Rᵀ = I), meaning its inverse is simply its transpose—rotating back is free. The determinant equals 1, confirming it's a pure rotation with no scaling or distortion. Most intriguingly, the eigenvalues are complex: λ = cos(θ) ± i·sin(θ) = e^(±iθ). This means the rotation angle, and therefore the time, is literally encoded in the eigenstructure of the matrix. You can even recover the angle from the **trace**: θ = arccos(trace( R)/2). It's a beautiful example of how linear algebra concepts connect: the same rotation can be understood through matrix multiplication, determinants, eigenvalues, or the trace, all giving consistent, complementary views of the same transformation.
+While not essential to the clock's operation, the rotation matrix has some elegant properties worth noting. The matrix is orthogonal (R × Rᵀ = I), meaning its inverse is simply its transpose—rotating back is free. The determinant equals 1, confirming it's a pure rotation with no scaling or distortion. Most intriguingly, the eigenvalues are complex: λ = cos(θ) ± i·sin(θ) = e^(±iθ). This means the rotation angle, and therefore the time, is literally encoded in the eigenstructure of the matrix. You can even recover the angle from the trace: θ = arccos(trace( R)/2). 
 
+---
 
 
